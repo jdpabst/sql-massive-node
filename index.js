@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const massive = require('massive');
-const productsCtrl = require('./productsCtrl');
 const session = require('express-session');
 
 let app = module.exports = express();
@@ -14,10 +13,10 @@ let massiveInstance = massive.connectSync({
 
 app.set('db', massiveInstance);
 let db = app.get('db');
-
+const productsCtrl = require('./productsCtrl');
 
 app.get('/api/products', productsCtrl.GetAll);
-app.get('/api/product', productsCtrl.GetOne);
+app.get('/api/product/:id', productsCtrl.GetOne);
 app.put('/api/product/:productId', productsCtrl.Update);
 app.post('/api/product', productsCtrl.Create);
 app.delete('/api/product/:productId', productsCtrl.Delete);
